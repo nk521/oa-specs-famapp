@@ -345,12 +345,14 @@ def MandateRoutes_approve(
 ) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/pause",
     summary="Pause Mandate",
     description="Temporarily stop future payments for an existing mandate.",
 )
-def MandateRoutes_pause() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_pause(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
 @r_MandateRoutes.get(
