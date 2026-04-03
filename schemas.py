@@ -296,6 +296,11 @@ class TpapCollectRejectRequestModel(BaseModel):
     bank_account_unique_id: str
 
 
+class TpapCollectApproveResponseModel(BaseModel):
+    collect_request: TpapCollectDetailsModel
+    txn_id: str | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

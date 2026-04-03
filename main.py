@@ -210,12 +210,14 @@ def CollectRoutes_reject(
 ) -> schemas.GenericResponse[schemas.TpapCollectDetailsModel]: ...
 
 
-@r_CollectRoutes.get(
+@r_CollectRoutes.post(
     "/approve",
     summary="Approve Collect Request",
     description="Authorize and execute a collect request payment.",
 )
-def CollectRoutes_approve() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_approve(
+    ctx: schemas.TpapCollectApproveRequestModel,
+) -> schemas.GenericResponse[schemas.TpapCollectApproveResponseModel]: ...
 
 
 @r_CollectRoutes.get(
