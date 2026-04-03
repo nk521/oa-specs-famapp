@@ -4,9 +4,9 @@ from pydantic import BaseModel
 
 
 class GenericResponse[T: BaseModel | None](BaseModel):
-    data: T
-    code: str
-    message: str
+    data: T | None
+    code: str | None
+    message: str | None
 
 class EmptyResponse(BaseModel):
     pass
