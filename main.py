@@ -240,7 +240,7 @@ r_CustomVpaRoutes = APIRouter(prefix="/vpa", tags=["VPA Management"])
     description="Generate available custom VPA handles based on user profile data.",
 )
 def CustomVpaRoutes_custom_suggestions() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
+    schemas.GenericResponse[schemas.VpaSuggestionsModel]
 ): ...
 
 

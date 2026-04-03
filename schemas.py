@@ -301,6 +301,10 @@ class TpapCollectApproveResponseModel(BaseModel):
     txn_id: str | None
 
 
+class VpaSuggestionsModel(BaseModel):
+    suggestions: list[str]
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
