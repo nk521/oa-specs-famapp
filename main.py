@@ -115,12 +115,14 @@ def BankRoutes_account_add(
 ) -> schemas.GenericResponse[schemas.UserAccountsModel]: ...
 
 
-@r_BankRoutes.get(
+@r_BankRoutes.post(
     "/lite/add",
     summary="Enable UPI Lite",
     description="Onboard the user to UPI Lite for small-value, PIN-less transactions.",
 )
-def BankRoutes_lite_add() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def BankRoutes_lite_add(
+    ctx: schemas.UpiLiteOnboardingRequestModel,
+) -> schemas.GenericResponse[schemas.UpiLiteOnboardingResponseModel]: ...
 
 
 @r_BankRoutes.get(

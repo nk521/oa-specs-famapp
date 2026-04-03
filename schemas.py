@@ -194,6 +194,25 @@ class AddBankAccountRequestModel(BaseModel):
     not_default: str
 
 
+class UpiLiteOnboardingRequestModel(BaseModel):
+    cred_block: dict[str, Any]
+    bank_account_unique_id: str
+    upi_request_id: str
+
+
+class UpiLiteOnboardingResponseModel(BaseModel):
+    resp_list_keys: str | None
+    resp_list_keys_expiry: int | None
+    lite_bank_account: UpiLiteAccountDetails | None
+
+
+class UpiLiteAccountDetails(BaseModel):
+    name: str | None
+    account_number: str | None  # AKA liteReferenceNumber
+    bank_account_unique_id: str | None
+    first_top_up_done: bool | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
