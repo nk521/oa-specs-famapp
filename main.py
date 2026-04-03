@@ -185,7 +185,9 @@ def CollectRoutes_new(
     summary="List Incoming Requests",
     description="Fetch all pending collect requests sent to the user.",
 )
-def CollectRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_list(
+    flow: str = "incoming",
+) -> schemas.GenericResponse[schemas.TpapCollectListModel]: ...
 
 
 @r_CollectRoutes.get(

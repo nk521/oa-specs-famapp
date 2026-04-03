@@ -274,6 +274,17 @@ class TpapCollectDetailsModel(BaseModel):
     collect_request: TpapCollectAtomicModel
 
 
+class Paginated[T: BaseModel](BaseModel):
+    count: int
+    next: str
+    previous: str
+    results: list[T] | None
+
+
+class TpapCollectListModel(BaseModel):
+    collect_requests: Paginated[TpapCollectDetailsModel]
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
