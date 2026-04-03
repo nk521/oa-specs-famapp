@@ -315,12 +315,14 @@ def MandateRoutes_list(
     ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/decline",
     summary="Decline Mandate",
     description="Reject an incoming request for a recurring payment mandate.",
 )
-def MandateRoutes_decline() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_decline(
+    ctx: schemas.TpapMandateRejectRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
 @r_MandateRoutes.get(

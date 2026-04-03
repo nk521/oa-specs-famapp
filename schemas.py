@@ -376,6 +376,10 @@ class TpapMandateIncomingListModel(BaseModel):
     mandates: Paginated[TpapMandateDetailsModel]
 
 
+class TpapMandateRejectRequestModel(BaseModel):
+    mandate_id: str
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
