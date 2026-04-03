@@ -85,6 +85,14 @@ class UserAccountModel(BaseModel):
     default_vpa_address: str
 
 
+class UserAccountsModel(
+    BaseModel
+):  # yes this and UserAccountModel are two different models
+    vpas: list[VpaAddressModel]
+    accounts: list[BankAccountAtomicModel]
+    default_vpa_address: str
+
+
 class VpaAddressModel(BaseModel):
     address: str
     is_merchant: str | None
@@ -179,6 +187,11 @@ class BankAccountAtomicModel(BaseModel):
 
 class LinkedBankAccountsResponseModel(BaseModel):
     accounts: list[BankAccountAtomicModel]
+
+
+class AddBankAccountRequestModel(BaseModel):
+    bank_account_unique_id: str
+    not_default: str
 
 
 class TpapAuthSession(BaseModel):

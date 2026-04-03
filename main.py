@@ -105,12 +105,14 @@ def BankRoutes_account_list(
 ) -> schemas.GenericResponse[schemas.LinkedBankAccountsResponseModel]: ...
 
 
-@r_BankRoutes.get(
+@r_BankRoutes.post(
     "/account/add",
     summary="Add Bank Account",
     description="Link a new bank account by discovering accounts associated with the registered mobile number.",
 )
-def BankRoutes_account_add() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def BankRoutes_account_add(
+    ctx: schemas.AddBankAccountRequestModel,
+) -> schemas.GenericResponse[schemas.UserAccountsModel]: ...
 
 
 @r_BankRoutes.get(
