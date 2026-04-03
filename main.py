@@ -416,7 +416,9 @@ def MandateRoutes_getOne() -> schemas.GenericResponse[schemas.EmptyResponse]: ..
     summary="Mandate Txn History",
     description="List all transactions processed under a specific mandate ID.",
 )
-def MandateRoutes_txn_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_txn_list(
+    mandate_id: str,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
 # --- MAPPER ROUTES ---
