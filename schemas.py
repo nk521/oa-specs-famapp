@@ -61,6 +61,24 @@ class ChangeMpinCredBlockModel(BaseModel):
     bank_account_unique_id: str
     upi_request_id: str
 
+class RemoveBankAccountRequestModel(BaseModel):
+    bank_account_unique_id: str
+
+
+class UserAccountModel(BaseModel):
+    vpas: list[VpaAddressModel]
+    accounts: list[AtomicBankModel]
+    default_vpa_address: str
+
+
+class VpaAddressModel(BaseModel):
+    address: str
+    is_merchant: str | None
+    name: str | None
+    ifsc: str | None
+    type: str | None
+    category: str | None
+    bank_account_unique_id: str | None
 
 class VerifyVpaRequestModel(BaseModel):
     upi_number: str | None
