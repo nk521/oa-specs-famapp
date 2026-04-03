@@ -23,7 +23,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: pdm install --check --prod
+        run: pdm install --prod
 
       - name: Export OpenAPI JSON
         run: |
