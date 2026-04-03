@@ -18,12 +18,9 @@ jobs:
 
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v4
-        with:
-          python-version: '3.14'
-          cache: true
 
       - name: Install dependencies
-        run: pdm install --prod
+        run: pdm install
 
       - name: Export OpenAPI JSON
         run: |
