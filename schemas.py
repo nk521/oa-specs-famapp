@@ -218,6 +218,16 @@ class UpiLiteSyncResponseModel(BaseModel):
     arpc: str | None
 
 
+class UpiVersionsResponseModel(BaseModel):
+    banks: list[BankUpiVersionsInfo] | None
+
+
+class BankUpiVersionsInfo(BaseModel):
+    code: str | None
+    name: str | None
+    featuresSupported: list[str] | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

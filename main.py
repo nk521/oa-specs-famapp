@@ -148,9 +148,22 @@ def BankRoutes_lite_sync() -> (
 @r_BankRoutes.get(
     "/upiVersions",
     summary="UPI Protocol Versions",
-    description="Check compatible UPI SDK and protocol versions supported by the backend.",
 )
-def BankRoutes_upiVersions() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def BankRoutes_upiVersions(
+    bankCodes: str,
+) -> schemas.GenericResponse[schemas.UpiVersionsResponseModel]:
+    """
+    Check compatible UPI SDK and protocol versions supported by the backend.
+
+    Note: `bankCode` is equal to --
+
+    ```python
+    some: list[str] = [...]
+
+    bankCode = ",".join(some[:62])
+    ```
+    """
+    ...
 
 
 # --- COLLECT ROUTES ---
