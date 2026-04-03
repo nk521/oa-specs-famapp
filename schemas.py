@@ -315,6 +315,17 @@ class ClaimVpaResponseModel(BaseModel):
     expiry: int | None
 
 
+class VpaItemModel(BaseModel):
+    vpa: str
+    category: int
+    is_default: bool
+    created_at: int
+
+
+class VpasListResponseModel(BaseModel):
+    vpas: list[VpaItemModel]
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

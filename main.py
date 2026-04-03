@@ -259,7 +259,9 @@ def CustomVpaRoutes_custom_claim(
     summary="List User VPAs",
     description="Retrieve all Virtual Payment Addresses associated with this user.",
 )
-def CustomVpaRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CustomVpaRoutes_list() -> (
+    schemas.GenericResponse[schemas.VpasListResponseModel]
+): ...
 
 
 @r_CustomVpaRoutes.get(
