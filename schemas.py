@@ -8,8 +8,10 @@ class GenericResponse[T: BaseModel | None](BaseModel):
     code: str | None
     message: str | None
 
+
 class EmptyResponse(BaseModel):
     pass
+
 
 class CheckBalanceCredBlockModel(BaseModel):
     cred_block: dict[str, Any]
@@ -52,8 +54,13 @@ class SetMpinRequestModel(BaseModel):
     cred_block: dict[str, Any]
     upi_request_id: str
 
+
 class ChangeMpinCredBlockModel(BaseModel):
-    ...
+    cred_block: dict[str, Any]
+    customer_vpa: str
+    bank_account_unique_id: str
+    upi_request_id: str
+
 
 class VerifyVpaRequestModel(BaseModel):
     upi_number: str | None
