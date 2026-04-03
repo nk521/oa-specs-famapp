@@ -383,7 +383,7 @@ def MandateRoutes_update(
 ) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/createOrder",
     summary="Initialize Mandate Payment",
     description="Create a transaction intent for a specific mandate installment.",
