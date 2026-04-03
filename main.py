@@ -225,7 +225,9 @@ def CollectRoutes_approve(
     summary="Get Request Details",
     description="Retrieve full metadata for a specific collect request ID.",
 )
-def CollectRoutes_getOne() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_getOne(
+    crId: str,
+) -> schemas.GenericResponse[schemas.TpapCollectDetailsModel]: ...
 
 
 # --- VPA MANAGEMENT ---
