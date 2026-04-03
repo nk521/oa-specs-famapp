@@ -360,7 +360,9 @@ def MandateRoutes_pause(
     summary="Resume Mandate",
     description="Re-enable a previously paused recurring payment mandate.",
 )
-def MandateRoutes_unpause() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_unpause(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
 @r_MandateRoutes.get(
