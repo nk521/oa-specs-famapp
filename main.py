@@ -100,7 +100,9 @@ def BankRoutes_account_generateOTP(
     summary="List Linked Accounts",
     description="Retrieve all bank accounts currently linked to the user's profile.",
 )
-def BankRoutes_account_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def BankRoutes_account_list(
+    bankCode: str,
+) -> schemas.GenericResponse[schemas.LinkedBankAccountsResponseModel]: ...
 
 
 @r_BankRoutes.get(

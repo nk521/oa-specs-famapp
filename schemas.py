@@ -126,7 +126,7 @@ class CredBlockRequestModel(BaseModel):
     bank_account_unique_id: str
     note: str | None
     ref_id: str | None
-    ref_url: str | None     # assumed based on ref_id, this key is encrypted in source
+    ref_url: str | None  # assumed based on ref_id, this key is encrypted in source
     channel: str | None
 
     @classmethod
@@ -161,6 +161,24 @@ class credBlockAtomicResponse(BaseModel):
 
 class CredBlockResponse(BaseModel):
     cred_block: credBlockAtomicResponse | None
+
+
+class BankAccountAtomicModel(BaseModel):
+    bank_account_unique_id: str
+    bank_code: str
+    bank_name: str
+    name: str
+    mask_account_number: str
+    mpin_set: bool
+    mpin_length: str
+    type: str
+    ifsc: str
+    atm_pin_length: str
+    is_default: bool
+
+
+class LinkedBankAccountsResponseModel(BaseModel):
+    accounts: list[BankAccountAtomicModel]
 
 
 class TpapAuthSession(BaseModel):
