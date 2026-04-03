@@ -160,7 +160,7 @@ class UpiRequestTypeIdModel(BaseModel):
     upi_request_id: str
 
 
-class credBlockAtomicResponse(BaseModel):
+class CredBlockAtomicResponse(BaseModel):
     key_code: str
     xml_payload: str
     controls: str
@@ -174,7 +174,7 @@ class credBlockAtomicResponse(BaseModel):
 
 
 class CredBlockResponse(BaseModel):
-    cred_block: credBlockAtomicResponse | None
+    cred_block: CredBlockAtomicResponse | None
 
 
 class BankAccountAtomicModel(BaseModel):
@@ -390,6 +390,35 @@ class TpapMandateActionRequestModel(BaseModel):
     upi_request_id: str | None
     validity_end: int | None
     amount: str | None
+
+
+class TpapCreateMandateRequestModel(BaseModel):
+    amount: str
+    amount_rule: str
+    initiation_mode: str
+    mandate_name: str | None
+    mandate_type: str
+    payee_vpa: str
+    purpose_code: str | None
+    recurrence_rule: str
+    recurrence_pattern: str
+    status: str = "initiated"
+    upi_request_id: str
+    validity_end: int
+    validity_start: int | None
+    bank_account_unique_id: str
+    mcc: str
+    remarks: str
+    recurrence_value: str | None
+    ref_url: str
+    transaction_reference: str
+    recipient_name: str
+    payer_revocable: bool
+
+
+class TpapCreateMandateResponseModel(BaseModel):
+    mandate_details: TpapMandateDetailsModel
+    cred_block_resp: CredBlockAtomicResponse | None
 
 
 class TpapAuthSession(BaseModel):

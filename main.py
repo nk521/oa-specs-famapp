@@ -355,7 +355,7 @@ def MandateRoutes_pause(
 ) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/unpause",
     summary="Resume Mandate",
     description="Re-enable a previously paused recurring payment mandate.",
@@ -365,7 +365,7 @@ def MandateRoutes_unpause(
 ) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/revoke",
     summary="Cancel Mandate",
     description="Permanently terminate a mandate instruction.",
@@ -373,7 +373,7 @@ def MandateRoutes_unpause(
 def MandateRoutes_revoke() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/update",
     summary="Modify Mandate",
     description="Update mandate details like validity period or maximum transaction amount.",
@@ -388,7 +388,9 @@ def MandateRoutes_update(
     summary="Initialize Mandate Payment",
     description="Create a transaction intent for a specific mandate installment.",
 )
-def MandateRoutes_createOrder() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_createOrder(
+    ctx: schemas.TpapCreateMandateRequestModel,
+) -> schemas.GenericResponse[schemas.TpapCreateMandateResponseModel]: ...
 
 
 @r_MandateRoutes.get(
