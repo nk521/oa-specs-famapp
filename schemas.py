@@ -305,6 +305,16 @@ class VpaSuggestionsModel(BaseModel):
     suggestions: list[str]
 
 
+class vpaRequestModel(BaseModel):
+    vpa: str
+
+
+class ClaimVpaResponseModel(BaseModel):
+    vpa: str
+    status: int
+    expiry: int | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

@@ -244,14 +244,14 @@ def CustomVpaRoutes_custom_suggestions() -> (
 ): ...
 
 
-@r_CustomVpaRoutes.get(
+@r_CustomVpaRoutes.post(
     "/custom/claim",
     summary="Claim Custom VPA",
     description="Permanently assign a chosen custom VPA handle to the user profile.",
 )
-def CustomVpaRoutes_custom_claim() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def CustomVpaRoutes_custom_claim(
+    ctx: schemas.vpaRequestModel,
+) -> schemas.GenericResponse[schemas.ClaimVpaResponseModel]: ...
 
 
 @r_CustomVpaRoutes.get(
