@@ -270,7 +270,7 @@ def CustomVpaRoutes_list() -> (
     description="Check if a custom VPA handle is active or pending verification.",
 )
 def CustomVpaRoutes_custom_status() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
+    schemas.GenericResponse[schemas.GetCustomVpaStatusModel]
 ): ...
 
 

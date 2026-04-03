@@ -326,6 +326,11 @@ class VpasListResponseModel(BaseModel):
     vpas: list[VpaItemModel]
 
 
+class GetCustomVpaStatusModel(BaseModel):
+    status: int
+    vpa: str | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
