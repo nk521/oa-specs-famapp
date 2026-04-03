@@ -170,12 +170,14 @@ def BankRoutes_upiVersions(
 r_CollectRoutes = APIRouter(prefix="/collectRequest", tags=["Collect Requests"])
 
 
-@r_CollectRoutes.get(
+@r_CollectRoutes.post(
     "/new",
     summary="Initiate Collect Request",
     description="Create a request to pull funds from a third-party VPA.",
 )
-def CollectRoutes_new() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_new(
+    ctx: schemas.TpapCollectCreateRequestModel,
+) -> schemas.GenericResponse[schemas.TpapCollectDetailsModel]: ...
 
 
 @r_CollectRoutes.get(
