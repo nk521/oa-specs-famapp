@@ -1,0 +1,21 @@
+[project]
+name = "fampay_openapi"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "nk521", email = "nk_mason@protonmail.com"},
+]
+dependencies = ["fastapi>=0.135.3", "uvicorn>=0.42.0"]
+requires-python = "==3.14.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
+[dependency-groups]
+dev = [
+    "black>=26.3.1",
+    "isort>=8.0.1",
+]
