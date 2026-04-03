@@ -380,6 +380,18 @@ class TpapMandateRejectRequestModel(BaseModel):
     mandate_id: str
 
 
+class TpapMandateActionRequestModel(BaseModel):
+    cred_block: dict[str, Any]
+    type: str | None
+    mandate_id: str | None
+    bank_account_unique_id: str | None
+    remarks: str | None
+    pause_end_timestamp: int | None
+    upi_request_id: str | None
+    validity_end: int | None
+    amount: str | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

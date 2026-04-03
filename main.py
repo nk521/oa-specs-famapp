@@ -330,7 +330,9 @@ def MandateRoutes_decline(
     summary="Generate Mandate CredBlock",
     description="Create the encrypted credential block required to sign a mandate setup.",
 )
-def MandateRoutes_genCredBlock() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_genCredBlock(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.CredBlockResponse]: ...
 
 
 @r_MandateRoutes.get(
