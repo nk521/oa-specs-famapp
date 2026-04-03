@@ -200,12 +200,14 @@ def CollectRoutes_genCredBlock(
 ) -> schemas.GenericResponse[schemas.CredBlockResponse]: ...
 
 
-@r_CollectRoutes.get(
+@r_CollectRoutes.post(
     "/reject",
     summary="Reject Collect Request",
     description="Decline an incoming payment request from another user or merchant.",
 )
-def CollectRoutes_reject() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_reject(
+    ctx: schemas.TpapCollectRejectRequestModel,
+) -> schemas.GenericResponse[schemas.TpapCollectDetailsModel]: ...
 
 
 @r_CollectRoutes.get(
