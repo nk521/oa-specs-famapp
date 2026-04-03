@@ -1,6 +1,19 @@
+from enum import Enum
 from typing import Any
 
 from pydantic import BaseModel
+
+
+class CredType(Enum):
+    BAL_ENQ = "reqBalEnq"
+    PAY = "pay"
+    COLLECT = "collect"
+    SET_MPIN = "setMpin"
+    CHANGE_MPIN = "changeMpin"
+    BAL_CHECK = "reqBalChk"
+    MANDATE = "mandate"
+    UPI_LITE_ONBOARDING = "binding"
+    UPI_LITE_PAY = "pay"
 
 
 class GenericResponse[T: BaseModel | None](BaseModel):
@@ -92,6 +105,62 @@ class VerifyVpaRequestModel(BaseModel):
 
 class ChangeDefaultAccountRequestModel(BaseModel):
     bank_account_unique_id: str
+
+
+class GenerateOtpRequestModel(BaseModel):
+    type: str | None
+    customer_vpa: str | None
+    bank_account_unique_id: str | None
+    card_last_six_digits: str | None
+    expiry_month: str | None
+    expiry_year: str | None
+    aadhaar_first_six_digits: str | None
+    cred_block_dto: CredBlockRequestModel | None
+
+
+class CredBlockRequestModel(BaseModel):
+    amount: str
+    cred_type: list[str]
+    payee_vpa: str
+    payer_vpa: str
+    bank_account_unique_id: str
+    note: str | None
+    ref_id: str | None
+    ref_url: str | None     # assumed based on ref_id, this key is encrypted in source
+    channel: str | None
+
+    @classmethod
+    def generate_for_set_mpin(cls, bank_account_unique_id: str, customer_vpa: str):
+        cls.amount = "0"
+        cls.cred_type = [CredType.SET_MPIN.value]
+        cls.payee_vpa = customer_vpa
+        cls.payer_vpa = customer_vpa
+        cls.bank_account_unique_id = bank_account_unique_id
+        # Channel is 480 in this context. It goes thru this block --
+        # (i & 256) != 0 ? null : "LITE"
+        cls.channel = None
+
+
+class UpiRequestTypeIdModel(BaseModel):
+    cred_type: str
+    upi_request_id: str
+
+
+class credBlockAtomicResponse(BaseModel):
+    key_code: str
+    xml_payload: str
+    controls: str
+    configuration: str
+    salt: str
+    trust: str
+    pay_info: str
+    language_pref: str
+    upi_request_id: list[UpiRequestTypeIdModel]  # note: not a type, key is singular
+    trust_non_sha: str
+
+
+class CredBlockResponse(BaseModel):
+    cred_block: credBlockAtomicResponse | None
 
 
 class TpapAuthSession(BaseModel):

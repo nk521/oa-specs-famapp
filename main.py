@@ -85,14 +85,14 @@ def BankRoutes_account_changeDefault(
 ) -> schemas.GenericResponse[schemas.UserAccountModel]: ...
 
 
-@r_BankRoutes.get(
+@r_BankRoutes.post(
     "/account/generateOTP",
     summary="Request Bank OTP",
     description="Trigger a bank-generated OTP for sensitive operations like resetting an MPIN.",
 )
-def BankRoutes_account_generateOTP() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def BankRoutes_account_generateOTP(
+    ctx: schemas.GenerateOtpRequestModel,
+) -> schemas.GenericResponse[schemas.CredBlockResponse]: ...
 
 
 @r_BankRoutes.get(
