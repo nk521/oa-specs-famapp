@@ -135,12 +135,14 @@ def BankRoutes_lite_delete() -> (
 ): ...
 
 
-@r_BankRoutes.get(
+@r_BankRoutes.post(
     "/lite/sync",
     summary="Sync UPI Lite Balance",
     description="Synchronize local on-device wallet balance with the server-side ledger.",
 )
-def BankRoutes_lite_sync() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def BankRoutes_lite_sync() -> (
+    schemas.GenericResponse[schemas.UpiLiteSyncResponseModel]
+): ...
 
 
 @r_BankRoutes.get(
