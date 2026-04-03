@@ -190,12 +190,14 @@ def CollectRoutes_list(
 ) -> schemas.GenericResponse[schemas.TpapCollectListModel]: ...
 
 
-@r_CollectRoutes.get(
+@r_CollectRoutes.post(
     "/genCredBlock",
     summary="Generate Payment CredBlock",
     description="Generate the encrypted payload required to authorize a collect request payment.",
 )
-def CollectRoutes_genCredBlock() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_genCredBlock(
+    ctx: schemas.TpapCollectApproveRequestModel,
+) -> schemas.GenericResponse[schemas.CredBlockResponse]: ...
 
 
 @r_CollectRoutes.get(

@@ -285,6 +285,12 @@ class TpapCollectListModel(BaseModel):
     collect_requests: Paginated[TpapCollectDetailsModel]
 
 
+class TpapCollectApproveRequestModel(BaseModel):
+    cred_block: dict[str, Any] | None
+    collect_request_id: str | None
+    bank_account_unique_id: str | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
