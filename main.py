@@ -335,12 +335,14 @@ def MandateRoutes_genCredBlock(
 ) -> schemas.GenericResponse[schemas.CredBlockResponse]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/approve",
     summary="Authorize Mandate",
     description="Sign and activate a recurring payment instruction.",
 )
-def MandateRoutes_approve() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_approve(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
 @r_MandateRoutes.get(
