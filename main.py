@@ -170,12 +170,14 @@ def BankRoutes_upiVersions(
 r_CollectRoutes = APIRouter(prefix="/collectRequest", tags=["Collect Requests"])
 
 
-@r_CollectRoutes.get(
+@r_CollectRoutes.post(
     "/new",
     summary="Initiate Collect Request",
     description="Create a request to pull funds from a third-party VPA.",
 )
-def CollectRoutes_new() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_new(
+    ctx: schemas.TpapCollectCreateRequestModel,
+) -> schemas.GenericResponse[schemas.TpapCollectDetailsModel]: ...
 
 
 @r_CollectRoutes.get(
@@ -183,31 +185,39 @@ def CollectRoutes_new() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
     summary="List Incoming Requests",
     description="Fetch all pending collect requests sent to the user.",
 )
-def CollectRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_list(
+    flow: str = "incoming",
+) -> schemas.GenericResponse[schemas.TpapCollectListModel]: ...
 
 
-@r_CollectRoutes.get(
+@r_CollectRoutes.post(
     "/genCredBlock",
     summary="Generate Payment CredBlock",
     description="Generate the encrypted payload required to authorize a collect request payment.",
 )
-def CollectRoutes_genCredBlock() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_genCredBlock(
+    ctx: schemas.TpapCollectApproveRequestModel,
+) -> schemas.GenericResponse[schemas.CredBlockResponse]: ...
 
 
-@r_CollectRoutes.get(
+@r_CollectRoutes.post(
     "/reject",
     summary="Reject Collect Request",
     description="Decline an incoming payment request from another user or merchant.",
 )
-def CollectRoutes_reject() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_reject(
+    ctx: schemas.TpapCollectRejectRequestModel,
+) -> schemas.GenericResponse[schemas.TpapCollectDetailsModel]: ...
 
 
-@r_CollectRoutes.get(
+@r_CollectRoutes.post(
     "/approve",
     summary="Approve Collect Request",
     description="Authorize and execute a collect request payment.",
 )
-def CollectRoutes_approve() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_approve(
+    ctx: schemas.TpapCollectApproveRequestModel,
+) -> schemas.GenericResponse[schemas.TpapCollectApproveResponseModel]: ...
 
 
 @r_CollectRoutes.get(
@@ -215,7 +225,9 @@ def CollectRoutes_approve() -> schemas.GenericResponse[schemas.EmptyResponse]: .
     summary="Get Request Details",
     description="Retrieve full metadata for a specific collect request ID.",
 )
-def CollectRoutes_getOne() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CollectRoutes_getOne(
+    crId: str,
+) -> schemas.GenericResponse[schemas.TpapCollectDetailsModel]: ...
 
 
 # --- VPA MANAGEMENT ---

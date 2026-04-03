@@ -16,6 +16,12 @@ class CredType(Enum):
     UPI_LITE_PAY = "pay"
 
 
+class VpaAddressCategory(Enum):
+    CATEGORY_DEFAULT = 0
+    CATEGORY_SECONDARY = 1
+    CATEGORY_CUSTOM = 2
+
+
 class GenericResponse[T: BaseModel | None](BaseModel):
     data: T | None
     code: str | None
@@ -99,7 +105,7 @@ class VpaAddressModel(BaseModel):
     name: str | None
     ifsc: str | None
     type: str | None
-    category: str | None
+    category: VpaAddressCategory | None
     bank_account_unique_id: str | None
 
 
@@ -226,6 +232,73 @@ class BankUpiVersionsInfo(BaseModel):
     code: str | None
     name: str | None
     featuresSupported: list[str] | None
+
+
+class TpapCollectCreateRequestModel(BaseModel):
+    init_mode: str
+    currency: str
+    amount: str
+    beneficiary_id: str
+    remarks: str | None
+    purpose_code: str | None
+
+
+class VpaAddressWithIdModel(BaseModel):
+    vpa: VpaAddressModel
+
+
+class DelegateeInfo(BaseModel):
+    delegatee_customer_id: str | None
+    delegatee_vpa: str | None
+    delegatee_name: str | None
+    delegatee_mobile_number: str | None
+
+
+class TpapCollectAtomicModel(BaseModel):
+    collect_type: str | None
+    amount: str | None
+    status: str | None
+    is_incoming: bool | None
+    payee_vpa: VpaAddressWithIdModel | None
+    payer_vpa: VpaAddressWithIdModel | None
+    expiry: int | None
+    is_verified_payee: bool | None
+    is_marked_spam: bool | None
+    seq_number: str | None
+    delegatee_info: DelegateeInfo | None
+
+
+class TpapCollectDetailsModel(BaseModel):
+    id: str | None
+    created_at: str | None
+    collect_request: TpapCollectAtomicModel
+
+
+class Paginated[T: BaseModel](BaseModel):
+    count: int
+    next: str
+    previous: str
+    results: list[T] | None
+
+
+class TpapCollectListModel(BaseModel):
+    collect_requests: Paginated[TpapCollectDetailsModel]
+
+
+class TpapCollectApproveRequestModel(BaseModel):
+    cred_block: dict[str, Any] | None
+    collect_request_id: str | None
+    bank_account_unique_id: str | None
+
+
+class TpapCollectRejectRequestModel(BaseModel):
+    collect_request_id: str
+    bank_account_unique_id: str
+
+
+class TpapCollectApproveResponseModel(BaseModel):
+    collect_request: TpapCollectDetailsModel
+    txn_id: str | None
 
 
 class TpapAuthSession(BaseModel):
