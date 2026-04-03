@@ -88,6 +88,9 @@ class VerifyVpaRequestModel(BaseModel):
     bharat_qr: str | None
 
 
+class ChangeDefaultAccountRequestModel(BaseModel):
+    bank_account_unique_id: str
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
