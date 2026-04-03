@@ -325,7 +325,7 @@ def MandateRoutes_decline(
 ) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/genCredBlock",
     summary="Generate Mandate CredBlock",
     description="Create the encrypted credential block required to sign a mandate setup.",
