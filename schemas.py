@@ -301,6 +301,44 @@ class TpapCollectApproveResponseModel(BaseModel):
     txn_id: str | None
 
 
+class VpaSuggestionsModel(BaseModel):
+    suggestions: list[str]
+
+
+class vpaRequestModel(BaseModel):
+    vpa: str
+
+
+class ClaimVpaResponseModel(BaseModel):
+    vpa: str
+    status: int
+    expiry: int | None
+
+
+class VpaItemModel(BaseModel):
+    vpa: str
+    category: int
+    is_default: bool
+    created_at: int
+
+
+class VpasListResponseModel(BaseModel):
+    vpas: list[VpaItemModel]
+
+
+class GetCustomVpaStatusModel(BaseModel):
+    status: int
+    vpa: str | None
+
+
+class CustomerVpaRequestModel(BaseModel):
+    customer_vpa: str
+
+
+class VpaAvailabilityResponseModel(BaseModel):
+    available: bool
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

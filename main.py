@@ -240,18 +240,18 @@ r_CustomVpaRoutes = APIRouter(prefix="/vpa", tags=["VPA Management"])
     description="Generate available custom VPA handles based on user profile data.",
 )
 def CustomVpaRoutes_custom_suggestions() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
+    schemas.GenericResponse[schemas.VpaSuggestionsModel]
 ): ...
 
 
-@r_CustomVpaRoutes.get(
+@r_CustomVpaRoutes.post(
     "/custom/claim",
     summary="Claim Custom VPA",
     description="Permanently assign a chosen custom VPA handle to the user profile.",
 )
-def CustomVpaRoutes_custom_claim() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def CustomVpaRoutes_custom_claim(
+    ctx: schemas.vpaRequestModel,
+) -> schemas.GenericResponse[schemas.ClaimVpaResponseModel]: ...
 
 
 @r_CustomVpaRoutes.get(
@@ -259,7 +259,9 @@ def CustomVpaRoutes_custom_claim() -> (
     summary="List User VPAs",
     description="Retrieve all Virtual Payment Addresses associated with this user.",
 )
-def CustomVpaRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def CustomVpaRoutes_list() -> (
+    schemas.GenericResponse[schemas.VpasListResponseModel]
+): ...
 
 
 @r_CustomVpaRoutes.get(
@@ -268,28 +270,28 @@ def CustomVpaRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ..
     description="Check if a custom VPA handle is active or pending verification.",
 )
 def CustomVpaRoutes_custom_status() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
+    schemas.GenericResponse[schemas.GetCustomVpaStatusModel]
 ): ...
 
 
-@r_CustomVpaRoutes.get(
+@r_CustomVpaRoutes.post(
     "/v1/isAvailable",
     summary="Check VPA Availability",
     description="Verify if a specific VPA handle is currently available for registration.",
 )
-def CustomVpaRoutes_v1_isAvailable() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def CustomVpaRoutes_v1_isAvailable(
+    ctx: schemas.CustomerVpaRequestModel,
+) -> schemas.GenericResponse[schemas.VpaAvailabilityResponseModel]: ...
 
 
-@r_CustomVpaRoutes.get(
+@r_CustomVpaRoutes.post(
     "/changeDefault",
     summary="Update Primary VPA",
     description="Change which VPA handle is used by default for receiving payments.",
 )
-def CustomVpaRoutes_changeDefault() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def CustomVpaRoutes_changeDefault(
+    ctx: schemas.CustomerVpaRequestModel,
+) -> schemas.GenericResponse[schemas.UserAccountsModel]: ...
 
 
 # --- MANDATE ROUTES (RECURRING) ---
