@@ -393,12 +393,14 @@ def MandateRoutes_createOrder(
 ) -> schemas.GenericResponse[schemas.TpapCreateMandateResponseModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/executeOrder",
     summary="Finalize Mandate Payment",
     description="Submit the mandate transaction to the NPCI switch for execution.",
 )
-def MandateRoutes_executeOrder() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_executeOrder(
+    ctx: schemas.ExecuteMandateCredBlockModel,
+) -> schemas.GenericResponse[schemas.TpapCreateMandateResponseModel]: ...
 
 
 @r_MandateRoutes.get(

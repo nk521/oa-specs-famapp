@@ -421,6 +421,11 @@ class TpapCreateMandateResponseModel(BaseModel):
     cred_block_resp: CredBlockAtomicResponse | None
 
 
+class ExecuteMandateCredBlockModel(BaseModel):
+    cred_block: dict[str, Any]
+    mandate_id: str
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
