@@ -331,6 +331,14 @@ class GetCustomVpaStatusModel(BaseModel):
     vpa: str | None
 
 
+class CustomerVpaRequestModel(BaseModel):
+    customer_vpa: str
+
+
+class VpaAvailabilityResponseModel(BaseModel):
+    available: bool
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

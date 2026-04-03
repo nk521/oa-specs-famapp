@@ -274,14 +274,14 @@ def CustomVpaRoutes_custom_status() -> (
 ): ...
 
 
-@r_CustomVpaRoutes.get(
+@r_CustomVpaRoutes.post(
     "/v1/isAvailable",
     summary="Check VPA Availability",
     description="Verify if a specific VPA handle is currently available for registration.",
 )
-def CustomVpaRoutes_v1_isAvailable() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def CustomVpaRoutes_v1_isAvailable(
+    ctx: schemas.CustomerVpaRequestModel,
+) -> schemas.GenericResponse[schemas.VpaAvailabilityResponseModel]: ...
 
 
 @r_CustomVpaRoutes.get(
