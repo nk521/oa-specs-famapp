@@ -213,6 +213,11 @@ class UpiLiteAccountDetails(BaseModel):
     first_top_up_done: bool | None
 
 
+class UpiLiteSyncResponseModel(BaseModel):
+    lrn: str | None  # liteReferenceNumber
+    arpc: str | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

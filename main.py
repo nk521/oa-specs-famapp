@@ -125,12 +125,14 @@ def BankRoutes_lite_add(
 ) -> schemas.GenericResponse[schemas.UpiLiteOnboardingResponseModel]: ...
 
 
-@r_BankRoutes.get(
+@r_BankRoutes.post(
     "/lite/delete",
     summary="Disable UPI Lite",
     description="Deactivate the UPI Lite wallet and refund the remaining balance to the linked bank account.",
 )
-def BankRoutes_lite_delete() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def BankRoutes_lite_delete() -> (
+    schemas.GenericResponse[schemas.UpiLiteSyncResponseModel]
+): ...
 
 
 @r_BankRoutes.get(
