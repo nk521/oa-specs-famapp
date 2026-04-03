@@ -31,13 +31,60 @@ jobs:
               json.dump(app.openapi(), f)
           "
 
-      - name: Generate HTML with Redoc
-        run: npx @redocly/cli build-docs openapi.json -o index.html
-
-      - name: Prepare Deployment Directory
+      - name: Generate Static Docs Folders
         run: |
-          mkdir public
-          mv index.html public/
+          mkdir -p public/redoc
+          mkdir -p public/docs
+
+          # 1. Generate Redoc
+          npx @redocly/cli build-docs openapi.json -o public/redoc/index.html
+
+          # 2. Generate Swagger UI
+          pdm run python -c "
+          from fastapi.openapi.docs import get_swagger_ui_html
+          import os
+          html = get_swagger_ui_html(
+              openapi_url='../openapi.json',
+              title='API Docs - Swagger'
+          )
+          with open('public/docs/index.html', 'wb') as f:
+              f.write(html.body)
+          "
+
+          # 3. Move JSON to root
+          mv openapi.json public/
+
+          # 4. Create the Landing Page with Buttons
+          cat <<EOF > public/index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>FamApp API Documentation</title>
+              <style>
+                  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f7f6; }
+                  .container { text-align: center; background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+                  h1 { color: #2d3748; margin-bottom: 2rem; }
+                  .btn-group { display: flex; gap: 20px; justify-content: center; }
+                  .btn { text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: 600; transition: all 0.2s; border: 2px solid transparent; }
+                  .btn-swagger { background-color: #85ea2d; color: #000; }
+                  .btn-swagger:hover { background-color: #71d024; }
+                  .btn-redoc { background-color: #32329f; color: #fff; }
+                  .btn-redoc:hover { background-color: #25257a; }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>FamApp API Specs</h1>
+                  <div class="btn-group">
+                      <a href="./docs/" class="btn btn-swagger">Swagger UI</a>
+                      <a href="./redoc/" class="btn btn-redoc">ReDoc</a>
+                  </div>
+              </div>
+          </body>
+          </html>
+          EOF
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
