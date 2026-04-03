@@ -160,7 +160,7 @@ class UpiRequestTypeIdModel(BaseModel):
     upi_request_id: str
 
 
-class credBlockAtomicResponse(BaseModel):
+class CredBlockAtomicResponse(BaseModel):
     key_code: str
     xml_payload: str
     controls: str
@@ -174,7 +174,7 @@ class credBlockAtomicResponse(BaseModel):
 
 
 class CredBlockResponse(BaseModel):
-    cred_block: credBlockAtomicResponse | None
+    cred_block: CredBlockAtomicResponse | None
 
 
 class BankAccountAtomicModel(BaseModel):
@@ -337,6 +337,93 @@ class CustomerVpaRequestModel(BaseModel):
 
 class VpaAvailabilityResponseModel(BaseModel):
     available: bool
+
+
+class UserBankAccountModel(BaseModel):
+    user_bank_account: BankAccountAtomicModel
+
+
+class TpapMandateAtomicDetailsModel(BaseModel):
+    created_by: str | None
+    mandate_type: str | None
+    is_incoming: bool | None
+    upi_request_id: str | None
+    mandate_name: str | None
+    amount_rule: str | None
+    recurrence_rule: str | None
+    recurrence_pattern: str | None
+    recurrence_value: str | None
+    amount: str | None
+    status: str | None
+    validity_end: int | None
+    payer_bank_account: UserBankAccountModel | None
+    pause_start: int | None
+    pause_end: int | None  # guessed, this is encrypted in source.
+    payee_vpa: VpaAddressWithIdModel | None
+    payee_name: str | None
+    umn: str | None
+    is_verified_payee: bool | None
+    is_marked_spam: bool | None
+
+
+class TpapMandateDetailsModel(BaseModel):
+    id: str | None
+    created_at: int | None
+    mandate: TpapMandateAtomicDetailsModel
+
+
+class TpapMandateIncomingListModel(BaseModel):
+    mandates: Paginated[TpapMandateDetailsModel]
+
+
+class TpapMandateRejectRequestModel(BaseModel):
+    mandate_id: str
+
+
+class TpapMandateActionRequestModel(BaseModel):
+    cred_block: dict[str, Any]
+    type: str | None
+    mandate_id: str | None
+    bank_account_unique_id: str | None
+    remarks: str | None
+    pause_end_timestamp: int | None
+    upi_request_id: str | None
+    validity_end: int | None
+    amount: str | None
+
+
+class TpapCreateMandateRequestModel(BaseModel):
+    amount: str
+    amount_rule: str
+    initiation_mode: str
+    mandate_name: str | None
+    mandate_type: str
+    payee_vpa: str
+    purpose_code: str | None
+    recurrence_rule: str
+    recurrence_pattern: str
+    status: str = "initiated"
+    upi_request_id: str
+    validity_end: int
+    validity_start: int | None
+    bank_account_unique_id: str
+    mcc: str
+    remarks: str
+    recurrence_value: str | None
+    ref_url: str
+    transaction_reference: str
+    recipient_name: str
+    payer_revocable: bool
+
+
+class TpapCreateMandateResponseModel(BaseModel):
+    mandate_details: TpapMandateDetailsModel
+    cred_block_resp: CredBlockAtomicResponse | None
+
+
+class ExecuteMandateCredBlockModel(BaseModel):
+    cred_block: dict[str, Any]
+    mandate_id: str
 
 
 class TpapAuthSession(BaseModel):

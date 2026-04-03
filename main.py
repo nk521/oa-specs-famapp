@@ -301,52 +301,71 @@ r_MandateRoutes = APIRouter(prefix="/mandate", tags=["UPI Mandates"])
 @r_MandateRoutes.get(
     "/list",
     summary="List Mandates",
-    description="Fetch all recurring payment mandates (active, paused, or revoked).",
 )
-def MandateRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_list(
+    status_filters: str, page_size: int
+) -> schemas.GenericResponse[schemas.TpapMandateIncomingListModel]:
+    """
+    Fetch all recurring payment mandates (active, paused, or revoked).
+
+    status_filters is comma separated values. valid values --
+
+    `success,unpaused,processing,failed,declined,revoked,paused,completed,deemed,pending`
+    """
+    ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/decline",
     summary="Decline Mandate",
     description="Reject an incoming request for a recurring payment mandate.",
 )
-def MandateRoutes_decline() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_decline(
+    ctx: schemas.TpapMandateRejectRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/genCredBlock",
     summary="Generate Mandate CredBlock",
     description="Create the encrypted credential block required to sign a mandate setup.",
 )
-def MandateRoutes_genCredBlock() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_genCredBlock(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.CredBlockResponse]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/approve",
     summary="Authorize Mandate",
     description="Sign and activate a recurring payment instruction.",
 )
-def MandateRoutes_approve() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_approve(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/pause",
     summary="Pause Mandate",
     description="Temporarily stop future payments for an existing mandate.",
 )
-def MandateRoutes_pause() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_pause(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/unpause",
     summary="Resume Mandate",
     description="Re-enable a previously paused recurring payment mandate.",
 )
-def MandateRoutes_unpause() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_unpause(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/revoke",
     summary="Cancel Mandate",
     description="Permanently terminate a mandate instruction.",
@@ -354,28 +373,34 @@ def MandateRoutes_unpause() -> schemas.GenericResponse[schemas.EmptyResponse]: .
 def MandateRoutes_revoke() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/update",
     summary="Modify Mandate",
     description="Update mandate details like validity period or maximum transaction amount.",
 )
-def MandateRoutes_update() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_update(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/createOrder",
     summary="Initialize Mandate Payment",
     description="Create a transaction intent for a specific mandate installment.",
 )
-def MandateRoutes_createOrder() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_createOrder(
+    ctx: schemas.TpapCreateMandateRequestModel,
+) -> schemas.GenericResponse[schemas.TpapCreateMandateResponseModel]: ...
 
 
-@r_MandateRoutes.get(
+@r_MandateRoutes.post(
     "/executeOrder",
     summary="Finalize Mandate Payment",
     description="Submit the mandate transaction to the NPCI switch for execution.",
 )
-def MandateRoutes_executeOrder() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_executeOrder(
+    ctx: schemas.ExecuteMandateCredBlockModel,
+) -> schemas.GenericResponse[schemas.TpapCreateMandateResponseModel]: ...
 
 
 @r_MandateRoutes.get(
@@ -391,7 +416,9 @@ def MandateRoutes_getOne() -> schemas.GenericResponse[schemas.EmptyResponse]: ..
     summary="Mandate Txn History",
     description="List all transactions processed under a specific mandate ID.",
 )
-def MandateRoutes_txn_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_txn_list(
+    mandate_id: str,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
 # --- MAPPER ROUTES ---
