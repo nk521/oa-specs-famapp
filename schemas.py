@@ -61,6 +61,7 @@ class ChangeMpinCredBlockModel(BaseModel):
     bank_account_unique_id: str
     upi_request_id: str
 
+
 class RemoveBankAccountRequestModel(BaseModel):
     bank_account_unique_id: str
 
@@ -80,6 +81,7 @@ class VpaAddressModel(BaseModel):
     category: str | None
     bank_account_unique_id: str | None
 
+
 class VerifyVpaRequestModel(BaseModel):
     upi_number: str | None
     bank_account_number: str | None
@@ -90,6 +92,7 @@ class VerifyVpaRequestModel(BaseModel):
 
 class ChangeDefaultAccountRequestModel(BaseModel):
     bank_account_unique_id: str
+
 
 class TpapAuthSession(BaseModel):
     customer_id: str
