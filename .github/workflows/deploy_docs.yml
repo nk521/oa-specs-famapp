@@ -1,0 +1,50 @@
+name: Deploy OpenAPI Docs
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: '3.14'
+          cache: true
+
+      - name: Install dependencies
+        run: pdm install --check --prod
+
+      - name: Export OpenAPI JSON
+        run: |
+          pdm run python -c "
+          import json
+          from main import app
+          with open('openapi.json', 'w') as f:
+              json.dump(app.openapi(), f)
+          "
+
+      - name: Generate HTML with Redoc
+        run: npx @redocly/cli build-docs openapi.json -o index.html
+
+      - name: Prepare Deployment Directory
+        run: |
+          mkdir public
+          mv index.html public/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          cname: famapp.specs.nkmason.dev
