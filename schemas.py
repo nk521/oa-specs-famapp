@@ -339,6 +339,43 @@ class VpaAvailabilityResponseModel(BaseModel):
     available: bool
 
 
+class UserBankAccountModel(BaseModel):
+    user_bank_account: BankAccountAtomicModel
+
+
+class TpapMandateAtomicDetailsModel(BaseModel):
+    created_by: str | None
+    mandate_type: str | None
+    is_incoming: bool | None
+    upi_request_id: str | None
+    mandate_name: str | None
+    amount_rule: str | None
+    recurrence_rule: str | None
+    recurrence_pattern: str | None
+    recurrence_value: str | None
+    amount: str | None
+    status: str | None
+    validity_end: int | None
+    payer_bank_account: UserBankAccountModel | None
+    pause_start: int | None
+    pause_end: int | None  # guessed, this is encrypted in source.
+    payee_vpa: VpaAddressWithIdModel | None
+    payee_name: str | None
+    umn: str | None
+    is_verified_payee: bool | None
+    is_marked_spam: bool | None
+
+
+class TpapMandateDetailsModel(BaseModel):
+    id: str | None
+    created_at: int | None
+    mandate: TpapMandateAtomicDetailsModel
+
+
+class TpapMandateIncomingListModel(BaseModel):
+    mandates: Paginated[TpapMandateDetailsModel]
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

@@ -301,9 +301,18 @@ r_MandateRoutes = APIRouter(prefix="/mandate", tags=["UPI Mandates"])
 @r_MandateRoutes.get(
     "/list",
     summary="List Mandates",
-    description="Fetch all recurring payment mandates (active, paused, or revoked).",
 )
-def MandateRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_list(
+    status_filters: str, page_size: int
+) -> schemas.GenericResponse[schemas.TpapMandateIncomingListModel]:
+    """
+    Fetch all recurring payment mandates (active, paused, or revoked).
+
+    status_filters is comma separated values. valid values --
+
+    `success,unpaused,processing,failed,declined,revoked,paused,completed,deemed,pending`
+    """
+    ...
 
 
 @r_MandateRoutes.get(
