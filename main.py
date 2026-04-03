@@ -378,7 +378,9 @@ def MandateRoutes_revoke() -> schemas.GenericResponse[schemas.EmptyResponse]: ..
     summary="Modify Mandate",
     description="Update mandate details like validity period or maximum transaction amount.",
 )
-def MandateRoutes_update() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MandateRoutes_update(
+    ctx: schemas.TpapMandateActionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapMandateDetailsModel]: ...
 
 
 @r_MandateRoutes.get(
