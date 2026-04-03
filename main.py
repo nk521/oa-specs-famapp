@@ -284,14 +284,14 @@ def CustomVpaRoutes_v1_isAvailable(
 ) -> schemas.GenericResponse[schemas.VpaAvailabilityResponseModel]: ...
 
 
-@r_CustomVpaRoutes.get(
+@r_CustomVpaRoutes.post(
     "/changeDefault",
     summary="Update Primary VPA",
     description="Change which VPA handle is used by default for receiving payments.",
 )
-def CustomVpaRoutes_changeDefault() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def CustomVpaRoutes_changeDefault(
+    ctx: schemas.CustomerVpaRequestModel,
+) -> schemas.GenericResponse[schemas.UserAccountsModel]: ...
 
 
 # --- MANDATE ROUTES (RECURRING) ---
