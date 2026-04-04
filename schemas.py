@@ -516,6 +516,10 @@ class TpapTransactionCompleteDetailsModel(BaseModel):
     mandate_with_id: TpapMandateDetailsModel | None
 
 
+class TpapTxnListModel(BaseModel):
+    transactions: Paginated[TpapTransactionWithIdModel]
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

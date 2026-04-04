@@ -474,7 +474,12 @@ r_TransactionRoutes = APIRouter(prefix="/txn", tags=["Transactions"])
     summary="Transaction History",
     description="Fetch the global transaction history for the user profile.",
 )
-def TransactionRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def TransactionRoutes_list(
+    acc_type: str | None,
+    start_time: int | None,
+    end_time: int | None,
+    cursor: int = 0,
+) -> schemas.GenericResponse[schemas.TpapTxnListModel]: ...
 
 
 @r_TransactionRoutes.get(
