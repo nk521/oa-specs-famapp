@@ -745,6 +745,53 @@ class FetchNpciTokenRequestModel(BaseModel):
     rotate: bool
 
 
+class MerchantGenre(Enum):
+    OFFLINE = 0
+    ONLINE = 1
+
+
+class MerchantType(Enum):
+    SMALL = 0
+    LARGE = 1
+
+
+class MerchantLimitsInfo(BaseModel):
+    ppi: int | None
+    cc_upi: int | None
+    cl_upi: int | None
+
+
+class UpiParams(BaseModel):
+    amount: str
+    min_amount: str
+    description: str | None
+    transaction_ref: str | None
+    ref_url: str | None
+    txn_id: str | None
+    ref_category: str | None
+
+
+class VerifyVpaResponse(BaseModel):
+    ifsc_id: str | None
+    upi_number: str
+    code: str | None
+    name: str
+    is_merchant: bool
+    is_merchant_verified: str
+    vpa: str
+    mcc: str = "0000"
+    ifsc: str | None
+    beneficiary_id: str
+    upi_params: UpiParams
+    merchant_type: MerchantType | None
+    merchant_genre: MerchantGenre | None
+    max_limits: MerchantLimitsInfo | None
+
+
+class VerifyVpaWrapperResponse(BaseModel):
+    verify_vpa_resp: VerifyVpaResponse
+
+
 class NpciTokenData(BaseModel):
     npci_token: str
     npci_token_decoded: str

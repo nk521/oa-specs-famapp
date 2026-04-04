@@ -708,7 +708,7 @@ r_VpaVerifyRoutes = APIRouter(prefix="/vpa", tags=["VPA Verification"])
 )
 def VpaVerifyRoutes_verify(
     ctx: schemas.VerifyVpaRequestModel,
-) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+) -> schemas.GenericResponse[schemas.VerifyVpaWrapperResponse]: ...
 
 
 @r_VpaVerifyRoutes.get(
@@ -716,7 +716,9 @@ def VpaVerifyRoutes_verify(
     summary="External VPA Verification",
     description="Extended verification for cross-PSP VPA handles.",
 )
-def VpaVerifyRoutes_verifyExt() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def VpaVerifyRoutes_verifyExt(
+    ctx: schemas.VerifyVpaRequestModel,
+) -> schemas.GenericResponse[schemas.VerifyVpaWrapperResponse]: ...
 
 
 # Include all routers
