@@ -638,6 +638,11 @@ class UpiDelegateCollectActionsPayload(BaseModel):
     cred_block: dict[str, Any] | None
 
 
+class TpapAuthSessionRequestModel(BaseModel):
+    psp_slug: str | None
+    should_expire_session: bool | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
@@ -651,3 +656,95 @@ class TpapAuthSession(BaseModel):
     sms_token: str
     token_expiry_time: str | None
     system_time: str | None
+
+
+class UpiDelegateLinkStatus(Enum):
+    STATUS_INITIATED = "INITIATED"
+    STATUS_REQUESTED = "REQUESTED"
+    STATUS_PENDING = "PENDING"
+    STATUS_LINKED = "LINKED"
+    STATUS_DELINKED = "DELINKED"
+    STATUS_LINKING_REQUEST_EXPIRED = "LINKING_REQUEST_EXPIRED"
+    STATUS_LINK_EXPIRED = "LINK_EXPIRED"
+    STATUS_DECLINED = "DECLINED"
+
+
+class PrimaryDelegationInfo(BaseModel):
+    delegate_link_id: str | None
+    link_type: UpiDelegateLinkType | None
+    link_status: UpiDelegateLinkStatus | None
+    delegator_name: str | None
+    delegator_vpa: str | None
+    delegator_mobile_number: str | None
+    delegator_masked_account_number: str | None
+    delegator_bank_code: str | None
+    delegator_bank_ifsc: str | None
+
+
+class UserJourneyState(Enum):
+    SMS_VERIFIED = 0
+    BANK_ACCOUNT_LINKED = 1
+    MPIN_SET = 2
+    ACTIVELY_TRANSACTING = 3
+
+
+class TpapAuthSessionResponseModel(BaseModel):
+    auth_session: TpapAuthSession | None
+    acc_info: UserAccountsModel | None
+    delegate_info: PrimaryDelegationInfo | None
+    user_journey_state: UserJourneyState | None
+    has_been_secondary_in_upi_circle: bool | None
+
+
+class TpapDeviceInfoModel(BaseModel):
+    manufacturer: str | None
+    model: str | None
+    version: str | None  # guessed, you know the reason
+    os: str | None
+    device_id: str
+    sim_slot: str
+    package_name: str
+
+
+class TpapGenerateSimBindingRequestModel(BaseModel):
+    client_session_id: str
+    phone_number: str
+    country_code: str
+    device_details: TpapDeviceInfoModel
+
+
+class TpapVmnModel(BaseModel):
+    name: str
+    number: str
+
+
+class TpapGenerateSimBindingResponseModel(BaseModel):
+    sms_content: str
+    expiry_timestamp: str | None
+    service_providers: list[TpapVmnModel] | None
+
+
+class TpapVerifySimBindingRequestModel(BaseModel):
+    client_session_id: str
+    phone_number: str
+    country_code: str
+    device_id: str
+
+
+class TpapSimBindingStatus(Enum):
+    STATUS_SUCCESS = 0
+    STATUS_PENDING = 1
+
+
+class TpapSimBindingVerificationResponseModel(BaseModel):
+    status: TpapSimBindingStatus
+
+
+class FetchNpciTokenRequestModel(BaseModel):
+    token_challenge: str
+    rotate: bool
+
+
+class NpciTokenData(BaseModel):
+    npci_token: str
+    npci_token_decoded: str
