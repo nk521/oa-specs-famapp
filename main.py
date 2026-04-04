@@ -5,9 +5,9 @@ import schemas
 base_url = "https://hogwarts.famapp.in/halfblood/"
 
 app = FastAPI(
-    title="Fampay Banking API",
-    description="Internal API for managing UPI transactions, bank accounts, and VPA mappings.",
-    version="1.0.0",
+    title="FamApp's API Documentation",
+    description="Public Facing APIs provided by FamApp. Version: `v4.1.0.7`. Source: https://github.com/nk521/oa-specs-famapp.",
+    version="v4.1.0.7",
     servers=[{"url": base_url, "description": "Fampay's Prod Server"}],
 )
 
