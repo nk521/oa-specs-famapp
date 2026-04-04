@@ -445,12 +445,14 @@ def MapperRoutes_new(
 ) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
-@r_MapperRoutes.get(
+@r_MapperRoutes.post(
     "/upiMapper/update",
     summary="Update Mapper",
     description="Change the destination VPA for a currently mapped mobile number.",
 )
-def MapperRoutes_update() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MapperRoutes_update(
+    ctx: schemas.UpdateUpiMapperRequestMode,
+) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
 @r_MapperRoutes.get(

@@ -443,6 +443,12 @@ class CreateUpiNumberRequestModel(BaseModel):
     action: str | None
 
 
+class UpdateUpiMapperRequestMode(BaseModel):
+    upi_number_map_id: str | None
+    action: str | None
+    new_vpa: str | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
