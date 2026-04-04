@@ -459,6 +459,63 @@ class UpiNumberCheckResponseModel(BaseModel):
     upi_number_map_id: str | None
 
 
+class TpapTxnPoint(BaseModel):
+    user_lite_bank_account: UpiLiteAccountDetails | None
+
+
+class TxnStatusTimeStampModel(BaseModel):
+    status: str | None  # guessed because encrypted in source
+    timestamp: int | None
+
+
+class TpapTransactionExtraData2(BaseModel):
+    famcash: str | None
+    additional_fee: str | None
+
+
+class TpapTransactionExtraData(BaseModel):
+    remarks: str
+    additional_amount: TpapTransactionExtraData2
+
+
+class TpapTxnAtomicModel(BaseModel):
+    status: str | None
+    amount: str | None
+    utr: str | None
+    transaction_type: str | None
+    entry_type: str | None
+    transaction_channel: str | None
+    source: TpapTxnPoint | None
+    destination: TpapTxnPoint | None
+    collect_request: TpapCollectDetailsModel | None
+    mcc: str | None
+    mandate_id: str | None
+    id: str | None
+    status_changes: list[TxnStatusTimeStampModel] | None
+    user_bank_account: UserBankAccountModel | None
+    extra_data: TpapTransactionExtraData | None
+
+
+class TpapTransactionWithIdModel(BaseModel):
+    id: str
+    created_at: int
+    transaction: TpapTxnAtomicModel
+
+
+class TpapComplaintDetailsModel(BaseModel):
+    complaint_id: str | None
+    current_status: str | None
+    complaint_raise_time: int | None
+    udir_id: str | None
+
+
+class TpapTransactionCompleteDetailsModel(BaseModel):
+    transaction_with_id: TpapTransactionWithIdModel | None
+    cred_block_resp: CredBlockAtomicResponse | None
+    complaint_details: TpapComplaintDetailsModel | None
+    mandate_with_id: TpapMandateDetailsModel | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

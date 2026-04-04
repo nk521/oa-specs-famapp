@@ -498,6 +498,28 @@ def TransactionRoutes_executeOrder() -> (
 
 
 @r_TransactionRoutes.get(
+    "/getDetails",
+    summary="Get Transaction Details",
+)
+def TransactionRoutes_getTxnDetails(
+    txnID: str,
+) -> schemas.GenericResponse[schemas.TpapTransactionCompleteDetailsModel]:
+    """
+    `/getDetails` is guessed due to it being encrypted in source.
+
+    TODO: run this frida script at runtime to fetch the actual url
+
+    ```js
+    var ApiRoutes = Java.use("com.fampay.tpap.network.ApiRoutes");
+    blah = ApiRoutes.d.value;
+
+    console.log(blah);
+    ```
+    """
+    ...
+
+
+@r_TransactionRoutes.get(
     "/blockAndSpam",
     summary="Report User",
     description="Block a VPA and report it as a spam/fraudulent account to NPCI.",
