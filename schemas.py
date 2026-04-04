@@ -557,6 +557,36 @@ class MarkSpamBlockRequestModel(BaseModel):
     should_spam: bool | None
 
 
+class UdirCreateRequest(BaseModel):
+    adj_flag: str
+    adj_code: str
+    txn_utr: str
+    transaction_id: str
+    udir_type: str
+
+
+class TpapUdirStatusCheckPayload(BaseModel):
+    udir_id: str
+
+
+class TpapComplaintStatusModel(BaseModel):
+    status: str | None
+    timestamp: int | None
+
+
+class UdirDetailsModel(BaseModel):
+    crn: str
+    status: str
+    gatewayResponseMessage: str
+    status_changes: list[TpapComplaintStatusModel] | None
+
+
+class TpapUdirStatusCheckResponse(BaseModel):
+    id: str
+    udir: UdirDetailsModel
+    created_at: int
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

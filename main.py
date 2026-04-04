@@ -538,20 +538,24 @@ def TransactionRoutes_blockAndSpam(
 r_UDIRRoutes = APIRouter(prefix="/udir", tags=["Dispute Management"])
 
 
-@r_UDIRRoutes.get(
+@r_UDIRRoutes.post(
     "/create",
     summary="Raise Dispute",
     description="Initiate a UDIR (Unified Dispute and Issue Resolution) complaint for a failed transaction.",
 )
-def UDIRRoutes_create() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def UDIRRoutes_create(
+    ctx: schemas.UdirCreateRequest,
+) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
-@r_UDIRRoutes.get(
+@r_UDIRRoutes.post(
     "/status",
     summary="Check Dispute Status",
     description="Track the progress of an active UDIR dispute case.",
 )
-def UDIRRoutes_status() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def UDIRRoutes_status(
+    ctx: schemas.TpapUdirStatusCheckPayload,
+) -> schemas.GenericResponse[schemas.TpapUdirStatusCheckResponse]: ...
 
 
 # --- DELEGATE (LINKED ACCOUNTS) ---
