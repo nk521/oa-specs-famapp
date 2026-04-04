@@ -482,14 +482,14 @@ def TransactionRoutes_list(
 ) -> schemas.GenericResponse[schemas.TpapTxnListModel]: ...
 
 
-@r_TransactionRoutes.get(
+@r_TransactionRoutes.post(
     "/createOrder",
     summary="Initialize Payment",
     description="Create an intent for a new peer-to-peer or peer-to-merchant payment.",
 )
-def TransactionRoutes_createOrder() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def TransactionRoutes_createOrder(
+    ctx: schemas.TxnCreateOrderRequestModel,
+) -> schemas.GenericResponse[schemas.TpapTransactionCompleteDetailsModel]: ...
 
 
 @r_TransactionRoutes.get(

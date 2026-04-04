@@ -520,6 +520,31 @@ class TpapTxnListModel(BaseModel):
     transactions: Paginated[TpapTransactionWithIdModel]
 
 
+class LocationDetails(BaseModel):
+    latitude: float | None
+    longitude: float | None
+
+
+class TxnCreateOrderRequestModel(BaseModel):
+    transaction_type: str
+    init_mode: str
+    is_uploaded_from_gallery: bool
+    currency: str = "INR"
+    amount: str
+    beneficiary_id: str
+    dest_bank_account_unique_id: str
+    bank_account_unique_id: str
+    mcc: str
+    remarks: str | None
+    purpose_code: str | None = "00"
+    ref_url: str | None
+    ref_category: str | None
+    transaction_ref: str | None
+    txn_id: str | None
+    is_indirect_txn: bool | None
+    location: LocationDetails | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
