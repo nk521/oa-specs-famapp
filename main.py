@@ -562,54 +562,67 @@ def UDIRRoutes_status(
 r_UpiDelegateRoutes = APIRouter(prefix="/delegate", tags=["Delegate Accounts"])
 
 
-@r_UpiDelegateRoutes.get(
+@r_UpiDelegateRoutes.post(
     "/link/remainingLimit",
     summary="Get Delegate Limits",
     description="Check the spending limit remaining for a delegated/child account.",
 )
-def UpiDelegateRoutes_link_remainingLimit() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def UpiDelegateRoutes_link_remainingLimit(
+    ctx: schemas.DelegationRequest,
+) -> schemas.GenericResponse[schemas.UpiDelegateLinkLimitsResponse]: ...
 
 
-@r_UpiDelegateRoutes.get(
+@r_UpiDelegateRoutes.post(
     "/payRequest/generateCredBlock",
     summary="Delegate CredBlock",
     description="Generate credentials for a delegate user to sign a payment.",
 )
-def UpiDelegateRoutes_payRequest_generateCredBlock() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def UpiDelegateRoutes_payRequest_generateCredBlock(
+    ctx: schemas.UpiDelegateCollectCredBlockPayload,
+) -> schemas.GenericResponse[schemas.CredBlockAtomicResponse]: ...
 
 
-@r_UpiDelegateRoutes.get(
+@r_UpiDelegateRoutes.post(
     "/payRequest/",
     summary="Get Delegate Requests",
     description="Fetch all payment requests waiting for parent approval.",
 )
-def UpiDelegateRoutes_payRequest() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def UpiDelegateRoutes_payRequest(
+    ctx: schemas.UpiDelegatePaymentPayload,
+) -> schemas.GenericResponse[schemas.UpiDelegatePaymentResponse]: ...
 
 
-@r_UpiDelegateRoutes.get(
+@r_UpiDelegateRoutes.post(
     "/payRequest/approve",
     summary="Parent Approval",
     description="Authorize a payment request initiated by a delegate account.",
 )
-def UpiDelegateRoutes_payRequest_approve() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def UpiDelegateRoutes_payRequest_approve(
+    ctx: schemas.UpiDelegateCollectActionsPayload,
+) -> schemas.GenericResponse[schemas.UpiDelegatePaymentResponse]: ...
 
 
-@r_UpiDelegateRoutes.get(
+@r_UpiDelegateRoutes.post(
     "/payRequest/decline",
     summary="Parent Decline",
-    description="Reject a payment request initiated by a delegate account.",
 )
-def UpiDelegateRoutes_payRequest_decline() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def UpiDelegateRoutes_payRequest_decline(
+    ctx: schemas.UpiDelegateCollectActionsPayload,
+) -> schemas.GenericResponse[schemas.EmptyResponse]:
+    """
+    Reject a payment request initiated by a delegate account.
+
+    For this endpoint --
+
+    ```python
+    schemas.UpiDelegateCollectActionsPayload(
+        collect_request_id = <input>
+        bank_account_unique_id = None
+        cred_block = None
+    )
+    ```
+    """
+    ...
 
 
 # --- USER & SECURITY ---
