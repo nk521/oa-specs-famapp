@@ -474,37 +474,64 @@ r_TransactionRoutes = APIRouter(prefix="/txn", tags=["Transactions"])
     summary="Transaction History",
     description="Fetch the global transaction history for the user profile.",
 )
-def TransactionRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def TransactionRoutes_list(
+    acc_type: str | None,
+    start_time: int | None,
+    end_time: int | None,
+    cursor: int = 0,
+) -> schemas.GenericResponse[schemas.TpapTxnListModel]: ...
 
 
-@r_TransactionRoutes.get(
+@r_TransactionRoutes.post(
     "/createOrder",
     summary="Initialize Payment",
     description="Create an intent for a new peer-to-peer or peer-to-merchant payment.",
 )
-def TransactionRoutes_createOrder() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def TransactionRoutes_createOrder(
+    ctx: schemas.TxnCreateOrderRequestModel,
+) -> schemas.GenericResponse[schemas.TpapTransactionCompleteDetailsModel]: ...
 
 
-@r_TransactionRoutes.get(
+@r_TransactionRoutes.post(
     "/executeOrder",
     summary="Execute Payment",
     description="Submit an authorized transaction to the bank for final settlement.",
 )
-def TransactionRoutes_executeOrder() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def TransactionRoutes_executeOrder(
+    ctx: schemas.ExecuteTxnCredBlockModel,
+) -> schemas.GenericResponse[schemas.TpapTransactionCompleteDetailsModel]: ...
 
 
 @r_TransactionRoutes.get(
+    "/getDetails",
+    summary="Get Transaction Details",
+)
+def TransactionRoutes_getTxnDetails(
+    txnID: str,
+) -> schemas.GenericResponse[schemas.TpapTransactionCompleteDetailsModel]:
+    """
+    `/getDetails` is guessed due to it being encrypted in source.
+
+    TODO: run this frida script at runtime to fetch the actual url
+
+    ```js
+    var ApiRoutes = Java.use("com.fampay.tpap.network.ApiRoutes");
+    blah = ApiRoutes.d.value;
+
+    console.log(blah);
+    ```
+    """
+    ...
+
+
+@r_TransactionRoutes.post(
     "/blockAndSpam",
     summary="Report User",
     description="Block a VPA and report it as a spam/fraudulent account to NPCI.",
 )
-def TransactionRoutes_blockAndSpam() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def TransactionRoutes_blockAndSpam(
+    ctx: schemas.MarkSpamBlockRequestModel,
+) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
 # --- UDIR (DISPUTES) ---
