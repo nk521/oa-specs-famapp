@@ -524,14 +524,14 @@ def TransactionRoutes_getTxnDetails(
     ...
 
 
-@r_TransactionRoutes.get(
+@r_TransactionRoutes.post(
     "/blockAndSpam",
     summary="Report User",
     description="Block a VPA and report it as a spam/fraudulent account to NPCI.",
 )
-def TransactionRoutes_blockAndSpam() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def TransactionRoutes_blockAndSpam(
+    ctx: schemas.MarkSpamBlockRequestModel,
+) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
 # --- UDIR (DISPUTES) ---

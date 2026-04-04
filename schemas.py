@@ -550,6 +550,13 @@ class ExecuteTxnCredBlockModel(BaseModel):
     transaction_id: str
 
 
+class MarkSpamBlockRequestModel(BaseModel):
+    mandate_id: str | None
+    collect_request_id: str | None
+    should_block: bool | None
+    should_spam: bool | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
