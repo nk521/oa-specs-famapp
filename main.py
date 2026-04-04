@@ -435,12 +435,14 @@ def MapperRoutes_list() -> (
 ): ...
 
 
-@r_MapperRoutes.get(
+@r_MapperRoutes.post(
     "/upiMapper/new",
     summary="Create Mapper Entry",
     description="Map a mobile number or UPI number to a specific VPA.",
 )
-def MapperRoutes_new() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MapperRoutes_new(
+    ctx: schemas.CreateUpiNumberRequestModel,
+) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
 @r_MapperRoutes.get(

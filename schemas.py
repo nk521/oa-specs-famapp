@@ -437,6 +437,12 @@ class UpiNumbersWrapperResponse(BaseModel):
     upi_mappers: list[UpiNumberMapWithIdModel] | None
 
 
+class CreateUpiNumberRequestModel(BaseModel):
+    upi_number: str | None
+    customer_vpa: str | None
+    action: str | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
