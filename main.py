@@ -455,14 +455,14 @@ def MapperRoutes_update(
 ) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
-@r_MapperRoutes.get(
+@r_MapperRoutes.post(
     "/upiNumber/isAvailable",
     summary="Check UPI Number",
     description="Check if a numeric UPI ID is available for registration.",
 )
-def MapperRoutes_upiNumber_isAvailable() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def MapperRoutes_upiNumber_isAvailable(
+    ctx: schemas.CheckUpiNumberRequestModel,
+) -> schemas.GenericResponse[schemas.UpiNumberCheckResponseModel]: ...
 
 
 # --- TRANSACTION ROUTES ---

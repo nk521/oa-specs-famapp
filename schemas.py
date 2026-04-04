@@ -449,6 +449,16 @@ class UpdateUpiMapperRequestMode(BaseModel):
     new_vpa: str | None
 
 
+class CheckUpiNumberRequestModel(BaseModel):
+    upi_number: str
+
+
+class UpiNumberCheckResponseModel(BaseModel):
+    customer_vpa: str | None
+    action: str | None
+    upi_number_map_id: str | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
