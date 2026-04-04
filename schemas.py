@@ -545,6 +545,11 @@ class TxnCreateOrderRequestModel(BaseModel):
     location: LocationDetails | None
 
 
+class ExecuteTxnCredBlockModel(BaseModel):
+    cred_block: dict[str, Any]
+    transaction_id: str
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str

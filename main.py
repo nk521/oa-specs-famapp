@@ -492,14 +492,14 @@ def TransactionRoutes_createOrder(
 ) -> schemas.GenericResponse[schemas.TpapTransactionCompleteDetailsModel]: ...
 
 
-@r_TransactionRoutes.get(
+@r_TransactionRoutes.post(
     "/executeOrder",
     summary="Execute Payment",
     description="Submit an authorized transaction to the bank for final settlement.",
 )
-def TransactionRoutes_executeOrder() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def TransactionRoutes_executeOrder(
+    ctx: schemas.ExecuteTxnCredBlockModel,
+) -> schemas.GenericResponse[schemas.TpapTransactionCompleteDetailsModel]: ...
 
 
 @r_TransactionRoutes.get(
