@@ -711,7 +711,7 @@ def VpaVerifyRoutes_verify(
 ) -> schemas.GenericResponse[schemas.VerifyVpaWrapperResponse]: ...
 
 
-@r_VpaVerifyRoutes.get(
+@r_VpaVerifyRoutes.post(
     "/verifyExt",
     summary="External VPA Verification",
     description="Extended verification for cross-PSP VPA handles.",
