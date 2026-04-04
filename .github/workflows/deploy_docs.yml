@@ -33,28 +33,42 @@ jobs:
 
       - name: Generate Static Docs Folders
         run: |
-          mkdir -p public/redoc
-          mkdir -p public/docs
+          mkdir -p public/elements
+          mkdir -p public/swagger
 
-          # 1. Generate Redoc
-          npx @redocly/cli build-docs openapi.json -o public/redoc/index.html
-
-          # 2. Generate Swagger UI
           pdm run python -c "
           from fastapi.openapi.docs import get_swagger_ui_html
           import os
           html = get_swagger_ui_html(
               openapi_url='../openapi.json',
-              title='API Docs - Swagger'
+              title='FamApp API Docs - Swagger'
           )
-          with open('public/docs/index.html', 'wb') as f:
+          with open('public/swagger/index.html', 'wb') as f:
               f.write(html.body)
           "
 
-          # 3. Move JSON to root
+          cat <<EOF > public/elements/index.html
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+              <title>FamApp API Docs - Elements</title>
+              <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
+              <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
+            </head>
+            <body>
+              <elements-api
+                apiDescriptionUrl="../openapi.json"
+                router="hash"
+                layout="responsive"
+              />
+            </body>
+          </html>
+          EOF
+
           mv openapi.json public/
 
-          # 4. Create the Landing Page with Buttons
           cat <<EOF > public/index.html
           <!DOCTYPE html>
           <html>
@@ -67,10 +81,10 @@ jobs:
               <p>Select a documentation format:</p>
               <ul>
                   <li>
-                      <a href="./docs/">Swagger UI (OpenAPI Docs)</a>
+                      <a href="./swagger/">Swagger</a>
                   </li>
                   <li>
-                      <a href="./redoc/">ReDoc View</a>
+                      <a href="./elements/">Elements</a>
                   </li>
                   <li>
                       <a href="./openapi.json">Raw JSON</a>
