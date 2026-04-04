@@ -629,14 +629,14 @@ def UpiDelegateRoutes_payRequest_decline(
 r_UserRoutes = APIRouter(prefix="/user", tags=["User & Security"])
 
 
-@r_UserRoutes.get(
+@r_UserRoutes.post(
     "/v1/getAuthSession",
     summary="Get Auth Session",
     description="Retrieve a fresh authentication session for the native UPI SDK.",
 )
-def UserRoutes_v1_getAuthSession() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def UserRoutes_v1_getAuthSession(
+    ctx: schemas.TpapAuthSessionRequestModel,
+) -> schemas.GenericResponse[schemas.TpapAuthSessionResponseModel]: ...
 
 
 @r_UserRoutes.get(
@@ -644,33 +644,39 @@ def UserRoutes_v1_getAuthSession() -> (
     summary="User Account Info",
     description="Fetch general user profile metadata and registration status.",
 )
-def UserRoutes_getAccInfo() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def UserRoutes_getAccInfo() -> (
+    schemas.GenericResponse[schemas.TpapAuthSessionResponseModel]
+): ...
 
 
-@r_UserRoutes.get(
+@r_UserRoutes.post(
     "/generateSimBinding",
     summary="Initiate Device Binding",
     description="Start the SIM binding process by generating a unique challenge for SMS verification.",
 )
-def UserRoutes_generateSimBinding() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def UserRoutes_generateSimBinding(
+    ctx: schemas.TpapGenerateSimBindingRequestModel,
+) -> schemas.GenericResponse[schemas.TpapGenerateSimBindingResponseModel]: ...
 
 
-@r_UserRoutes.get(
+@r_UserRoutes.post(
     "/verifySimBinding",
     summary="Verify Device Binding",
     description="Confirm the SMS challenge to cryptographically bind the device to the user account.",
 )
-def UserRoutes_verifySimBinding() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def UserRoutes_verifySimBinding(
+    ctx: schemas.TpapVerifySimBindingRequestModel,
+) -> schemas.GenericResponse[schemas.TpapSimBindingVerificationResponseModel]: ...
 
 
-@r_UserRoutes.get(
+@r_UserRoutes.post(
     "/fetchNPCIToken",
     summary="Fetch NPCI Token",
     description="Retrieve the short-lived security token required for NPCI common library interactions.",
 )
-def UserRoutes_fetchNPCIToken() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def UserRoutes_fetchNPCIToken(
+    ctx: schemas.FetchNpciTokenRequestModel,
+) -> schemas.GenericResponse[schemas.NpciTokenData]: ...
 
 
 @r_UserRoutes.get(
@@ -681,12 +687,14 @@ def UserRoutes_fetchNPCIToken() -> schemas.GenericResponse[schemas.EmptyResponse
 def UserRoutes_deRegister() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
-@r_UserRoutes.get(
+@r_UserRoutes.post(
     "/genCredBlock",
     summary="Global CredBlock",
     description="Generate a generic credential block for miscellaneous secure operations.",
 )
-def UserRoutes_genCredBlock() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def UserRoutes_genCredBlock(
+    ctx: schemas.CredBlockRequestModel,
+) -> schemas.GenericResponse[schemas.CredBlockResponse]: ...
 
 
 # --- VPA VERIFICATION ---
