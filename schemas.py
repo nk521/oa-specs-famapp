@@ -587,6 +587,57 @@ class TpapUdirStatusCheckResponse(BaseModel):
     created_at: int
 
 
+class DelegationRequest(BaseModel):
+    delegate_link_id: str
+
+
+class UpiDelegateLinkType(Enum):
+    LINK_FULL = "FULL"
+    LINK_PARTIAL = "PARTIAL"
+
+
+class UpiDelegateLinkLimitsResponse(BaseModel):
+    delegate_link_id: str
+    remaining_balance: int | None
+    total_limit: str | None
+    per_transaction_limit: str | None
+    link_type: UpiDelegateLinkType | None
+
+
+class UpiDelegateCollectCredBlockPayload(BaseModel):
+    collect_request_id: str | None
+    bank_account_unique_id: str | None
+
+
+class UpiDelegatePaymentPayload(BaseModel):
+    transaction_type: str
+    init_mode: str
+    currency: str = "INR"
+    amount: str
+    beneficiary_id: str
+    destination_bank_account_unique_id: (
+        str | None
+    )  # NOTE: assumed because source is encrypted
+    delegate_link_id: str | None
+    mcc: str | None
+    remarks: str | None
+    ref_url: str | None
+    ref_category: str | None
+    transaction_ref: str | None
+    is_indirect_txn: bool | None
+    location: LocationDetails | None
+
+
+class UpiDelegatePaymentResponse(BaseModel):
+    transaction_id: str
+
+
+class UpiDelegateCollectActionsPayload(BaseModel):
+    collect_request_id: str
+    bank_account_unique_id: str | None
+    cred_block: dict[str, Any] | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
