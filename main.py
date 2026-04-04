@@ -430,33 +430,39 @@ r_MapperRoutes = APIRouter(tags=["UPI Mapper"])
     summary="List Mapped Numbers",
     description="Retrieve mobile-to-VPA mappings stored in the central UPI mapper.",
 )
-def MapperRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MapperRoutes_list() -> (
+    schemas.GenericResponse[schemas.UpiNumbersWrapperResponse]
+): ...
 
 
-@r_MapperRoutes.get(
+@r_MapperRoutes.post(
     "/upiMapper/new",
     summary="Create Mapper Entry",
     description="Map a mobile number or UPI number to a specific VPA.",
 )
-def MapperRoutes_new() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MapperRoutes_new(
+    ctx: schemas.CreateUpiNumberRequestModel,
+) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
-@r_MapperRoutes.get(
+@r_MapperRoutes.post(
     "/upiMapper/update",
     summary="Update Mapper",
     description="Change the destination VPA for a currently mapped mobile number.",
 )
-def MapperRoutes_update() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MapperRoutes_update(
+    ctx: schemas.UpdateUpiMapperRequestMode,
+) -> schemas.GenericResponse[schemas.EmptyResponse]: ...
 
 
-@r_MapperRoutes.get(
+@r_MapperRoutes.post(
     "/upiNumber/isAvailable",
     summary="Check UPI Number",
     description="Check if a numeric UPI ID is available for registration.",
 )
-def MapperRoutes_upiNumber_isAvailable() -> (
-    schemas.GenericResponse[schemas.EmptyResponse]
-): ...
+def MapperRoutes_upiNumber_isAvailable(
+    ctx: schemas.CheckUpiNumberRequestModel,
+) -> schemas.GenericResponse[schemas.UpiNumberCheckResponseModel]: ...
 
 
 # --- TRANSACTION ROUTES ---
