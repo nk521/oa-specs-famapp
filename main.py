@@ -430,7 +430,9 @@ r_MapperRoutes = APIRouter(tags=["UPI Mapper"])
     summary="List Mapped Numbers",
     description="Retrieve mobile-to-VPA mappings stored in the central UPI mapper.",
 )
-def MapperRoutes_list() -> schemas.GenericResponse[schemas.EmptyResponse]: ...
+def MapperRoutes_list() -> (
+    schemas.GenericResponse[schemas.UpiNumbersWrapperResponse]
+): ...
 
 
 @r_MapperRoutes.get(

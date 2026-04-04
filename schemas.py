@@ -426,6 +426,17 @@ class ExecuteMandateCredBlockModel(BaseModel):
     mandate_id: str
 
 
+class UpiNumberMapWithIdModel(BaseModel):
+    status: str | None
+    upi_number: str | None
+    expiry_timestamp: int | None
+    vpa_with_id: VpaAddressWithIdModel
+
+
+class UpiNumbersWrapperResponse(BaseModel):
+    upi_mappers: list[UpiNumberMapWithIdModel] | None
+
+
 class TpapAuthSession(BaseModel):
     customer_id: str
     device_id: str
